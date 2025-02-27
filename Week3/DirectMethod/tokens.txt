@@ -1,0 +1,17 @@
+Token: <LPAREN> | Value: ( | Current State: 1
+Token: <NUMBER> | Value: 10 | Current State: 2
+Token: <COMMA> | Value: , | Current State: 3
+Token: <NUMBER> | Value: 2 | Current State: 4
+Token: <RPAREN> | Value: ) | Current State: 6
+Token: <COMMA> | Value: , | Current State: 0
+Token: <LPAREN> | Value: ( | Current State: 1
+Token: <NUMBER> | Value: 10 | Current State: 2
+Token: <COMMA> | Value: , | Current State: 3
+Token: <RED> | Value: red | Current State: 5
+Token: <RPAREN> | Value: ) | Current State: 6
+Token: <COMMA> | Value: , | Current State: 0
+Token: <LPAREN> | Value: ( | Current State: 1
+Token: <NUMBER> | Value: 2 | Current State: 2
+Token: <COMMA> | Value: , | Current State: 3
+Token: <WHITE> | Value: white | Current State: 5
+Token: <RPAREN> | Value: ) | Current State: 6

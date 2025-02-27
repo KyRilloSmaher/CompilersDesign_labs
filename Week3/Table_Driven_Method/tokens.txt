@@ -1,0 +1,18 @@
+Token: <LPAREN> | Value: ( | State: q1
+Token: <NUMBER> | Value: 1 | State: q2
+Token: <COMMA> | Value: , | State: q3
+Token: <NUMBER> | Value: 2 | State: q4
+Token: <RPAREN> | Value: ) | State: q6
+Token: <COMMA> | Value: , | State: q0
+Token: <LPAREN> | Value: ( | State: q1
+Token: <NUMBER> | Value: 1 | State: q2
+Token: <COMMA> | Value: , | State: q3
+Token: <RED> | Value: red | State: q5
+Token: <RPAREN> | Value: ) | State: q6
+Token: <COMMA> | Value: , | State: q0
+Token: <LPAREN> | Value: ( | State: q1
+Token: <NUMBER> | Value: 2 | State: q2
+Token: <COMMA> | Value: , | State: q3
+Token: <BLUE> | Value: blue | State: q5
+Token: <RPAREN> | Value: ) | State: q6
+THE PROGRAM IS ACCEPTED :) ...
