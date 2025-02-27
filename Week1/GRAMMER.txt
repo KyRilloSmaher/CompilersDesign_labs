@@ -1,0 +1,11 @@
+# context-free grammar (CFG) For the Language 
+
+<graph>      ::= <pair> | <pair> "," <graph> .
+
+<pair>       ::= "(" <node> "," <node> ")" | "(" <node> "," <color> ")" .
+
+<node>       ::= <digit> | <digit> <node> .
+
+<color>      ::= "red" | "green" | "blue" | "white" | "yellow" .
+
+<digit>      ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" .
