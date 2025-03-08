@@ -1,1 +1,1 @@
-(1,2),(1,red),(2,blue)
+(   ),red,1,2, ,white       yellow

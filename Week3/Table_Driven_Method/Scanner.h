@@ -64,7 +64,7 @@ public:
 #pragma region Constructours
     Scanner(const string &input_file_path, const string &output_file_path)
     {
-        current_state = "q0";
+        current_state = initialState;
         input_file.open(input_file_path);
         output_file.open(output_file_path);
 
@@ -232,7 +232,14 @@ public:
             {
                 if (!str.empty())
                 {
+                 
                     string tokenType = getTokenType(str);
+                    if (tokenType =="<UNKNOWN>")
+                    {
+                        current_state = Errorstate;
+                        break;
+                    }
+                    
                     tokens.push_back(Token(tokenType, str, current_state));
                     str = "";
                 }
@@ -265,27 +272,51 @@ public:
                 if (!str.empty())
                 {
                     string tokenType = getTokenType(str);
+                    if (tokenType =="<UNKNOWN>")
+                    {
+                        current_state = Errorstate;
+                        break;
+                    }
                     tokens.push_back(Token(tokenType, str, current_state));
                     str = "";
                 }
 
                 str += chr;
                 current_state = getTransition(current_state, classifyCharacter(chr));
-                tokens.push_back(Token(getTokenType(classifyCharacter(chr)), str, current_state));
+                string tokenType = getTokenType(str);
+                if (tokenType =="<UNKNOWN>")
+                {
+                    current_state = Errorstate;
+                    break;
+                }
+                tokens.push_back(Token(tokenType, str, current_state));
                 str = "";
             }
         }
+        // handle case the end of file with a string 
+         if (input_file.get() == EOF )
+         {
+             if (!str.empty())
+             {
+                 string tokenType = getTokenType(str);
+                 if (tokenType =="<UNKNOWN>")
+                 {
+                     current_state = Errorstate;
+                 }
+                 tokens.push_back(Token(tokenType, str, current_state));
+             }
+         }
+         
         // write tokens to tokens.txt
         for (const auto &token : tokens)
         {
             output_file << "Token: " << token.TokenType << " | Value: " << token.TokenValue << " | State: " << token.State << endl;
         }
 
-             (current_state == Errorstate) ?
-             output_file << "THERE IS A Lexical Error ..." << endl:
-             (finalstates.find(current_state) != finalstates.end())?
-              output_file << "THE PROGRAM IS ACCEPTED :) ..." :
-              output_file << "THE FUCKING PROGRAM IS REJECTED >:( " ;
+             (current_state == Errorstate || finalstates.find(current_state) != finalstates.end()) ?
+              output_file << "THERE IS A Lexical Error ..." << endl:
+              output_file << "THE PROGRAM IS ACCEPTED :) ..." ;
+            
         
     }
 };
