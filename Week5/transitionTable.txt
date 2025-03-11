@@ -1,0 +1,6 @@
+q0#b#q1
+q0#a#q1
+q0#other#ERROR
+q1#a#q1
+q1#b#q1
+q1#other#ERROR

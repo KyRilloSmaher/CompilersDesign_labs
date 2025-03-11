@@ -1,0 +1,15 @@
+Matched token: <B>
+Matched token: <A>
+Matched token: <A>
+Matched token: <A>
+Matched token: <A>
+Matched token: <A>
+Matched token: <A>
+Matched token: <A>
+Matched token: <A>
+Matched token: <A>
+Matched token: <A>
+Matched token: <A>
+Matched token: <A>
+Matched token: <A>
+Matched token: <A>

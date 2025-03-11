@@ -20,7 +20,7 @@ private:
     ifstream input_file;
     ofstream output_file;
     string current_state;
-    set<string> keywords;
+    set<char> keywords;
     vector<string> states;
     set<string> finalstates;
     string initialState;
@@ -30,6 +30,7 @@ private:
 
 #pragma endregion
 
+#pragma region Helping methods
 #pragma region Helping methods
     void split(const string &line, char delimiter, vector<string> &target)
     {
@@ -48,16 +49,16 @@ private:
         target.push_back(temp); // for last token
     }
 
-    string classifyCharacter(char c)
-    {
-        if (isdigit(c))
-            return "number";
-        if (isalpha(c))
-            return "char";
-        if (c == '(' || c == ')' || c == ',')
-            return string(1, c);
-        return "other";
-    }
+    // string classifyCharacter(char c)
+    // {
+    //     if (isdigit(c))
+    //         return "number";
+    //     if (isalpha(c))
+    //         return "char";
+    //     if (c == '(' || c == ')' || c == ',')
+    //         return string(1, c);
+    //     return "other";
+    // }
 #pragma endregion
 
 public:
@@ -98,15 +99,15 @@ public:
 
     void LoadKeywords()
     {
-        ifstream keywordFile("keywords.txt");
+        ifstream keywordFile("Keywords.txt");
         string keyword;
         while (getline(keywordFile, keyword))
         {
-            keywords.insert(keyword);
+            keywords.insert(keyword[0]);
         }
         keywordFile.close();
         // Debug output
-        cout << "Language Keywords: ";
+        cout << "Language Keywords: \n";
         for (const auto &keyword : keywords)
         {
             cout << keyword << endl;
@@ -167,7 +168,7 @@ public:
 
     void LoadTransitionTable()
     {
-        ifstream transitionFile("transition.txt");
+        ifstream transitionFile("transitionTable.txt");
         string line;
         // read transition table from file line by line with seperating each line into three parts currentstate & input and gotostate using delimeter # .
         while (getline(transitionFile, line))
@@ -189,138 +190,66 @@ public:
             cout << entry.first.first << "      | " << entry.first.second << "  --->    " << entry.second << endl;
         }
     }
-
-    string getTransition(const string &from, const string &chr)
-    {
+    string getTransition(const string &currentState, const string &character){
         for (const auto &entry : transitionTable)
         {
-            if (entry.first.first == from && entry.first.second == chr)
+            if (entry.first.first == currentState && entry.first.second == character)
             {
                 return entry.second;
             }
         }
         return "";
     }
-
-    string getTokenType(const string &tkn)
-    {
-        if (keywords.find(tkn) != keywords.end())
-        {
-            string upperTkn = tkn;
-            transform(upperTkn.begin(), upperTkn.end(), upperTkn.begin(), ::toupper);
-            return "<" + upperTkn + ">";
+    string getTokenType(const char &character){
+        if (keywords.find(character) != keywords.end()) {
+            char upperChar = toupper(character); 
+            return "<" + string(1, upperChar) + ">";
         }
-        if (isdigit(tkn[0]))
-            return "<NUMBER>";
-        if (tkn == "(")
-            return "<LPAREN>";
-        if (tkn == ")")
-            return "<RPAREN>";
-        if (tkn == ",")
-            return "<COMMA>";
-        return "<UNKNOWN>";
+        
+        return "<INVALID>";
     }
-
     void scan()
     {
         char chr;
-        string str = "";
         while (input_file.peek() != EOF && current_state != Errorstate)
         {
             chr = input_file.get();
             if (isspace(chr))
             {
-                if (!str.empty())
-                {
-                 
-                    string tokenType = getTokenType(str);
-                    if (tokenType =="<UNKNOWN>")
-                    {
-                        current_state = Errorstate;
-                        break;
-                    }
-                    
-                    tokens.push_back(Token(tokenType, str, current_state));
-                    str = "";
-                }
                 continue;
             }
             else if (isalpha(chr))
             {
-                str += chr;
-                string nextState = getTransition(current_state, classifyCharacter(chr));
-                if (nextState.empty())
-                {
-                    current_state = Errorstate;
-                }
-                else
-                    current_state = nextState;
-            }
-            else if (isdigit(chr))
-            {
-                str += chr;
-                string nextState = getTransition(current_state, classifyCharacter(chr));
-                if (nextState.empty())
-                {
-                    current_state = Errorstate;
-                }
-                else
-                    current_state = nextState;
-            }
-            else if (chr == '(' || chr == ')' || chr == ',')
-            {
-                if (!str.empty())
-                {
-                    string tokenType = getTokenType(str);
-                    if (tokenType =="<UNKNOWN>")
-                    {
-                        current_state = Errorstate;
-                        break;
-                    }
-                    tokens.push_back(Token(tokenType, str, current_state));
-                    str = "";
-                }
 
-                str += chr;
-                current_state = getTransition(current_state, classifyCharacter(chr));
-                string tokenType = getTokenType(str);
-                if (tokenType =="<UNKNOWN>")
+                current_state = getTransition(current_state, string(1,chr));
+                if (current_state == Errorstate)
                 {
-                    current_state = Errorstate;
                     break;
                 }
-                tokens.push_back(Token(tokenType, str, current_state));
-                str = "";
-            }
-        }
-        // handle case the end of file with a string 
-         if (input_file.get() == EOF )
-         {
-             if (!str.empty())
-             {
-                 string tokenType = getTokenType(str);
-                 if (tokenType =="<UNKNOWN>")
-                 {
-                     current_state = Errorstate;
-                 }
-                 tokens.push_back(Token(tokenType, str, current_state));
-             }
-         }
-         
-        // write tokens to tokens.txt
-        for (const auto &token : tokens)
-        {
-            output_file << "Token: " << token.TokenType << " | Value: " << token.TokenValue << " | State: " << token.State << endl;
-        }
+                string token =getTokenType(chr);
+                if (token == "<INVALID>")
+                {
+                   cout << "There is Lexical Error !"<<endl;
+                   exit(1);
+                }
+                
+                tokens.push_back(Token(token, current_state));
 
-             (current_state == Errorstate || finalstates.find(current_state) == finalstates.end()) ?
-              output_file << "THERE IS A Lexical Error ..." << endl:
-              output_file << "THE PROGRAM IS ACCEPTED :) ..." ;
-            
-        
+            }
     }
+
+       // write tokens to ScannerOutput.txt
+       for (const auto &token : tokens)
+       {
+           output_file << token.TokenType <<"|"<< token.State << endl;
+       }
+
+            (current_state == Errorstate || finalstates.find(current_state) == finalstates.end()) ?
+             cout << "THERE IS A Lexical Error ...\n" << endl:
+             cout << "THE PROGRAM Lexically ACCEPTED :) ...\n" ;
+}
+    
+    #pragma endregion
 };
 
-#pragma endregion
-
-#endif
+#endif // SCANNER_H
