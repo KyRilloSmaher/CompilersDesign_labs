@@ -1,0 +1,67 @@
+Stack top: <Exp>, Current token: x
+Applying production: <Exp> -> <Term><Expr>
+Stack top: <Term>, Current token: x
+Applying production: <Term> -> <Factor><Termp>
+Stack top: <Factor>, Current token: x
+Applying production: <Factor> -> <id>
+Stack top: <id>, Current token: x
+Applying production: <id> -> x
+Stack top: x, Current token: x
+Stack top: <Termp>, Current token: +
+Applying production: <Termp> -> e
+Stack top: <Expr>, Current token: +
+Applying production: <Expr> -> +<Term><Expr>
+Stack top: +, Current token: +
+Stack top: <Term>, Current token: (
+Applying production: <Term> -> <Factor><Termp>
+Stack top: <Factor>, Current token: (
+Applying production: <Factor> -> (<Exp>)
+Stack top: (, Current token: (
+Stack top: <Exp>, Current token: y
+Applying production: <Exp> -> <Term><Expr>
+Stack top: <Term>, Current token: y
+Applying production: <Term> -> <Factor><Termp>
+Stack top: <Factor>, Current token: y
+Applying production: <Factor> -> <id>
+Stack top: <id>, Current token: y
+Applying production: <id> -> y
+Stack top: y, Current token: y
+Stack top: <Termp>, Current token: *
+Applying production: <Termp> -> *<Factor><Termp>
+Stack top: *, Current token: *
+Stack top: <Factor>, Current token: a
+Applying production: <Factor> -> <id>
+Stack top: <id>, Current token: a
+Applying production: <id> -> a
+Stack top: a, Current token: a
+Stack top: <Termp>, Current token: )
+Applying production: <Termp> -> e
+Stack top: <Expr>, Current token: )
+Applying production: <Expr> -> e
+Stack top: ), Current token: )
+Stack top: <Termp>, Current token: /
+Applying production: <Termp> -> /<Factor><Termp>
+Stack top: /, Current token: /
+Stack top: <Factor>, Current token: (
+Applying production: <Factor> -> (<Exp>)
+Stack top: (, Current token: (
+Stack top: <Exp>, Current token: z
+Applying production: <Exp> -> <Term><Expr>
+Stack top: <Term>, Current token: z
+Applying production: <Term> -> <Factor><Termp>
+Stack top: <Factor>, Current token: z
+Applying production: <Factor> -> <id>
+Stack top: <id>, Current token: z
+Applying production: <id> -> z
+Stack top: z, Current token: z
+Stack top: <Termp>, Current token: )
+Applying production: <Termp> -> e
+Stack top: <Expr>, Current token: )
+Applying production: <Expr> -> e
+Stack top: ), Current token: )
+Stack top: <Termp>, Current token: $
+Applying production: <Termp> -> e
+Stack top: <Expr>, Current token: $
+Applying production: <Expr> -> e
+Stack top: $, Current token: $
+Parsing completed successfully!

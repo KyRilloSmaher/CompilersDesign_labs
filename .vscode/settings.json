@@ -5,6 +5,8 @@
         "iostream": "cpp",
         "set": "cpp",
         "fstream": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "iosfwd": "cpp",
+        "*.txt": "cpp"
     }
 }

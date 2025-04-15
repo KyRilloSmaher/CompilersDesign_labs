@@ -1,0 +1,16 @@
+q0#char#q1
+q0#(#q1
+q0#)#q1
+q0#+#q1
+q0#-#q1
+q0#*#q1
+q0#/#q1
+q0#other#ERROR
+q1#char#q0
+q1#(#q0
+q1#)#q0
+q1#+#q0
+q1#-#q0
+q1#*#q0
+q1#/#q0
+q1#other#ERROR
